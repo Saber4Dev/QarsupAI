@@ -40,7 +40,7 @@ export default function Login(){
             }
 
             if (data.user) {
-                router.push("/");
+                router.push("/dashboard");
                 router.refresh();
             }
         } catch (err: any) {

@@ -43,6 +43,21 @@ export default function Footer(){
                                     Terms of Service
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/legal/data-processing" className="text-white/70 hover:text-amber-400 duration-500 inline-block">
+                                    Data Processing Policy
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/legal/acceptable-use" className="text-white/70 hover:text-amber-400 duration-500 inline-block">
+                                    Acceptable Use Policy
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/legal/refund-policy" className="text-white/70 hover:text-amber-400 duration-500 inline-block">
+                                    Refund & Cancellation Policy
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 

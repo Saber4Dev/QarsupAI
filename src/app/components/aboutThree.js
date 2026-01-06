@@ -76,13 +76,13 @@ export default function AboutThree(){
                     </div>
                 </div>
             </div>
-            <ModalVideo
+            {/* <ModalVideo
 				channel="youtube"
 				youtube={{ mute: 0, autoplay: 0 }}
 				isOpen={isOpen}
 				videoId="S_CGed6E610"
 				onClose={() => setOpen(false)} 
-			/>
+			/> */}
         </>
     )
 }

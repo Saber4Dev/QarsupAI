@@ -58,7 +58,7 @@ export default function Privacy() {
                                     <section>
                                         <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-white">1. Introduction</h2>
                                         <p className="text-slate-400 leading-relaxed">
-                                            Qarsup AI ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.
+                                            QARSUP LLC, operating as Qarsup AI ("we", "our", or "us"), is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.
                                         </p>
                                     </section>
 
@@ -162,9 +162,23 @@ export default function Privacy() {
                                         </p>
                                     </section>
 
+                                    {/* Company Information */}
+                                    <section>
+                                        <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-white">10. Company Information</h2>
+                                        <p className="text-slate-400 leading-relaxed">
+                                            Qarsup AI is operated by QARSUP LLC, a Limited Liability Company registered in the United States.
+                                        </p>
+                                        <p className="text-slate-400 leading-relaxed mt-4">
+                                            <strong>Company Address:</strong><br />
+                                            312 W 2ND ST NUM 6872<br />
+                                            Casper, WY 82601<br />
+                                            United States
+                                        </p>
+                                    </section>
+
                                     {/* Contact Us */}
                                     <section>
-                                        <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-white">10. Contact Us</h2>
+                                        <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-white">11. Contact Us</h2>
                                         <p className="text-slate-400 leading-relaxed">
                                             If you have any questions about this Privacy Policy, you may contact us at:
                                         </p>

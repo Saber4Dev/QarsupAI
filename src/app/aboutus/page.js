@@ -98,13 +98,13 @@ export default function AboutUs(){
                             </div>
                         </div>
                     </div>
-                    <ModalVideo
+                    {/* <ModalVideo
                         channel="youtube"
                         youtube={{ mute: 0, autoplay: 0 }}
                         isOpen={isOpen}
                         videoId="S_CGed6E610"
                         onClose={() => setOpen(false)} 
-                    />
+                    /> */}
                     <div className="">
                         <h3 className="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold"><span className="font-bold">Work smarter,</span> <br/> by using AI not  manually</h3>
                         <p className="text-slate-400 max-w-xl">Usually, our colleagues dont jump in the air when they hear e-learning, but the AI videos created with Qarsup AI have sparked motivation that we havent seen before.</p>

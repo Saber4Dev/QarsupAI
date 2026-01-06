@@ -53,6 +53,8 @@ export async function middleware(request: NextRequest) {
     endpointType = 'auth';
   } else if (pathname.startsWith('/contact') && request.method === 'POST') {
     endpointType = 'contact';
+  } else if (pathname.startsWith('/api/ai') && request.method === 'POST') {
+    endpointType = 'ai'; // AI generation endpoints need stricter rate limiting
   }
   
   // Apply rate limiting (only check once)
@@ -80,13 +82,14 @@ export const config = {
   matcher: [
     /*
      * Match all request paths except:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public files (images, etc.)
+     * 
+     * Note: API routes are included for rate limiting
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
   ],
 };
 

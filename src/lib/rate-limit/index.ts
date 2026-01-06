@@ -37,6 +37,11 @@ const RATE_LIMITS: Record<string, RateLimitConfig> = {
     maxRequests: 3, // 3 contact form submissions per hour
     message: 'Too many contact form submissions. Please try again later.',
   },
+  ai: {
+    windowMs: 60 * 1000, // 1 minute
+    maxRequests: 10, // 10 AI generations per minute (to prevent API abuse)
+    message: 'Too many content generation requests. Please wait a moment before generating more content.',
+  },
 };
 
 /**
