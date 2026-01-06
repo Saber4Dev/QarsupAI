@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic"
-const Switcher = dynamic(() => import('../components/switcher'))
+
 
 export default function Signup(){
     return(
@@ -62,7 +62,7 @@ export default function Signup(){
                 </div>
             </div>
         </section>
-        <Switcher/>
+        
         </>
     )
 }

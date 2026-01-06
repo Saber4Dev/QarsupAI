@@ -547,7 +547,7 @@ export default function ClientsTwo(){
                                 <ul className="space-y-4">
                                     <li className="rounded-lg shadow dark:shadow-gray-800 p-6 border-b-4 border-amber-400">
                                         <div className="flex items-center pb-6 border-b border-gray-200 dark:border-gray-800">
-                                            <Image src="/images/client/07.jpg " width={64} height={64} className="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt=""/>
+                                            <Image src="/images/client/07.jpg" width={64} height={64} className="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt=""/>
             
                                             <div className="ps-4">
                                                 <Link href="" className="text-lg hover:text-amber-400 duration-500 ease-in-out">Barbara McIntosh</Link>

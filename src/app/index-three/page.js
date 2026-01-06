@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const Navbar = dynamic(()=>import('../components/navbar'))
 const Footer = dynamic(() => import('../components/footer'))
-const Switcher = dynamic(() => import('../components/switcher'))
+
 const BrandLogo = dynamic(()=>import('../components/brandLogo'))
 const AboutThree = dynamic(()=>import('../components/aboutThree'))
 const AiFeatures = dynamic(()=>import('../components/aiFeatures'))
@@ -67,7 +67,7 @@ export default function IndexThree(){
             <Blogs/>
         </section>
         <Footer/>
-        <Switcher/>
+        
         </>
     )
 }

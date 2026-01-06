@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 const Navbar = dynamic(()=>import('../components/navbar'))
 const Footer = dynamic(() => import('../components/footer'))
-const Switcher = dynamic(() => import('../components/switcher'))
+
 
 import {FiHexagon, FiPhone,FiMail, FiMapPin} from "../assets/icons/vander"
 
@@ -132,7 +132,7 @@ export default function Contact(){
             </div>
         </section>
         <Footer/>
-        <Switcher/>
+        
         </>
     )
 }

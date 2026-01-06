@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const NavLight = dynamic(()=>import('../components/navlight'))
 const Footer = dynamic(() => import('../components/footer'))
-const Switcher = dynamic(() => import('../components/switcher'))
+
 const AboutThree = dynamic(() => import('../components/aboutThree'))
 const ClientsTwo = dynamic(() => import('../components/clientTwo'))
 const Pricing = dynamic(() => import('../components/pricing'))
@@ -29,7 +29,7 @@ export default function Pricings(){
                     </div>
 
                     <ul className="tracking-[0.5px] mb-0 inline-block mt-5">
-                        <li className="inline-block capitalize text-[15px] font-medium duration-500 ease-in-out text-white/50 hover:text-white"><Link href="/">Mortal.Ai</Link></li>
+                        <li className="inline-block capitalize text-[15px] font-medium duration-500 ease-in-out text-white/50 hover:text-white"><Link href="/">Qarsup AI</Link></li>
                         <li className="inline-block text-base text-white/50 mx-0.5 ltr:rotate-0 rtl:rotate-180"><i className="mdi mdi-chevron-right"></i></li>
                         <li className="inline-block capitalize text-[15px] font-medium duration-500 ease-in-out text-white" aria-current="page">Pricing</li>
                     </ul>
@@ -57,7 +57,7 @@ export default function Pricings(){
             <ClientsTwo/>
         </section>
         <Footer/>
-        <Switcher/>
+        
         </>
     )
 }

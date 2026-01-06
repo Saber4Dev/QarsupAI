@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic"
-const Switcher = dynamic(() => import('../components/switcher'))
+
 
 export default function ResetPassword(){
     return(
@@ -47,7 +47,7 @@ export default function ResetPassword(){
                 </div>
             </div>
         </section>
-        <Switcher/>
+        
         </>
     )
 }

@@ -10,8 +10,18 @@ const figtree= Figtree({
 })
 
 export const metadata = {
-  title: 'Mortal.Ai - Next Js AI Writer & Copywriting Template',
-  description: 'Mortal.Ai - Next Js AI Writer & Copywriting Template',
+  title: 'Qarsup AI - Next Js AI Writer & Copywriting Template',
+  description: 'Qarsup AI - Next Js AI Writer & Copywriting Template',
+  openGraph: {
+    title: 'Qarsup AI - Next Js AI Writer & Copywriting Template',
+    description: 'Qarsup AI - Next Js AI Writer & Copywriting Template',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Qarsup AI - Next Js AI Writer & Copywriting Template',
+    description: 'Qarsup AI - Next Js AI Writer & Copywriting Template',
+  },
 }
 
 export default function RootLayout({ children }) {

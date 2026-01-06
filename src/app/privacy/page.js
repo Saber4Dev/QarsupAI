@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const NavLight = dynamic(()=>import('../components/navbar'))
 const Footer = dynamic(() => import('../components/footer'))
-const Switcher = dynamic(() => import('../components/switcher'))
+
 
 export default function Privacy(){
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function Privacy(){
                     </div>
 
                     <ul className="tracking-[0.5px] mb-0 inline-block mt-5">
-                        <li className="inline-block capitalize font-medium duration-500 ease-in-out hover:text-amber-400"><Link href="/">Mortal.Ai</Link></li>
+                        <li className="inline-block capitalize font-medium duration-500 ease-in-out hover:text-amber-400"><Link href="/">Qarsup AI</Link></li>
                         <li className="inline-block text-base mx-0.5 ltr:rotate-0 rtl:rotate-180"><i className="mdi mdi-chevron-right"></i></li>
                         <li className="inline-block capitalize font-medium duration-500 ease-in-out text-amber-400" aria-current="page">Privacy</li>
                     </ul>
@@ -64,7 +64,7 @@ export default function Privacy(){
         </section>
         
         <Footer/>
-        <Switcher/>
+        
         </>
     )
 }

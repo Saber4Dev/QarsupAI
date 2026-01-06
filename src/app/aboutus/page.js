@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 const NavLight = dynamic(()=>import('../components/navlight'))
 const Footer = dynamic(() => import('../components/footer'))
-const Switcher = dynamic(() => import('../components/switcher'))
+
 const Blogs = dynamic(() => import('../components/blogs'))
 const ClientsTwo = dynamic(() => import('../components/clientTwo'))
 
@@ -68,7 +68,7 @@ export default function AboutUs(){
                     </div>
 
                     <ul className="tracking-[0.5px] mb-0 inline-block mt-5">
-                        <li className="inline-block capitalize text-[15px] font-medium duration-500 ease-in-out text-white/50 hover:text-white"><Link href="/">Mortal.Ai</Link></li>
+                        <li className="inline-block capitalize text-[15px] font-medium duration-500 ease-in-out text-white/50 hover:text-white"><Link href="/">Qarsup AI</Link></li>
                         <li className="inline-block text-base text-white/50 mx-0.5 ltr:rotate-0 rtl:rotate-180"><i className="mdi mdi-chevron-right"></i></li>
                         <li className="inline-block capitalize text-[15px] font-medium duration-500 ease-in-out text-white" aria-current="page">About Us</li>
                     </ul>
@@ -107,7 +107,7 @@ export default function AboutUs(){
                     />
                     <div className="">
                         <h3 className="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold"><span className="font-bold">Work smarter,</span> <br/> by using AI not  manually</h3>
-                        <p className="text-slate-400 max-w-xl">Usually, our colleagues dont jump in the air when they hear e-learning, but the AI videos created with Mortal.Ai have sparked motivation that we havent seen before.</p>
+                        <p className="text-slate-400 max-w-xl">Usually, our colleagues dont jump in the air when they hear e-learning, but the AI videos created with Qarsup AI have sparked motivation that we havent seen before.</p>
 
                         <ul className="list-none text-slate-400 mt-4">
                             <li className="mb-2 flex items-center"><FiCheckCircle className="text-amber-400 h-5 w-5 me-2"/> Digital Marketing Solutions for Tomorrow</li>
@@ -199,7 +199,7 @@ export default function AboutUs(){
             <Blogs/>
         </section>
         <Footer/>
-        <Switcher/> 
+        
         </>
     )
 }
