@@ -60,7 +60,7 @@ export default function Footer(){
                 <div className="container relative text-center">
                     <div className="grid grid-cols-1">
                         <div className="text-center">
-                            <p className="text-gray-400">© {new Date().getFullYear()} Qarsup AI. Design with <i className="mdi mdi-heart text-orange-700"></i> by <Link href="https://shreethemes.in/" target="_blank" className="text-reset">Shreethemes</Link>.</p>
+                            <p className="text-gray-400">© {new Date().getFullYear()} Mortal.Ai. Design with <i className="mdi mdi-heart text-orange-700"></i> by <Link href="https://shreethemes.in/" target="_blank" className="text-reset">Shreethemes</Link>.</p>
                         </div>
                     </div>
                 </div>
