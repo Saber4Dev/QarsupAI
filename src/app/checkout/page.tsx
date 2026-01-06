@@ -2,15 +2,15 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { createClient } from "@/utils/supabase/client";
 import { signupSchema, sanitizeEmail } from "@/lib/validation/schemas";
 
 // Force dynamic rendering for checkout page (required for useSearchParams)
 export const dynamic = 'force-dynamic';
 
-const Navbar = dynamic(() => import('../components/navbar'));
-const Footer = dynamic(() => import('../components/footer'));
+const Navbar = dynamicImport(() => import('../components/navbar'));
+const Footer = dynamicImport(() => import('../components/footer'));
 
 function CheckoutContent() {
     const router = useRouter();
