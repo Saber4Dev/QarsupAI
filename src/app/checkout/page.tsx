@@ -31,7 +31,12 @@ export default function Checkout() {
         phone: '',
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<{
+        fullName?: string;
+        email?: string;
+        password?: string;
+        phone?: string;
+    }>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Check authentication status
@@ -98,12 +103,16 @@ export default function Checkout() {
      * Validate form before submission
      */
     const validateForm = () => {
-        const newErrors = {};
+        const newErrors: {
+            fullName?: string;
+            email?: string;
+            password?: string;
+            phone?: string;
+        } = {};
 
-        if (!formData.fullName.trim()) {
-            newErrors.fullName = 'Full name is required';
-        }
+        // Full name is optional - no validation needed
 
+        // Email is required
         if (!formData.email.trim()) {
             newErrors.email = 'Email is required';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -233,9 +242,8 @@ export default function Checkout() {
         );
     }
 
-    // Validate if form can be submitted
-    const isFormValid = formData.fullName.trim() !== '' && 
-                       formData.email.trim() !== '' && 
+    // Validate if form can be submitted (email is required, full name is optional)
+    const isFormValid = formData.email.trim() !== '' && 
                        (isAuthenticated || formData.password.trim() !== '');
 
     return (
@@ -284,10 +292,10 @@ export default function Checkout() {
 
                                 <form onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-1 gap-6">
-                                        {/* Full Name */}
+                                        {/* Full Name - Optional */}
                                         <div>
                                             <label htmlFor="fullName" className="block font-semibold mb-2">
-                                                Full Name <span className="text-red-500">*</span>
+                                                Full Name <span className="text-slate-400 text-sm">(Optional)</span>
                                             </label>
                                             <input
                                                 type="text"
@@ -295,7 +303,6 @@ export default function Checkout() {
                                                 name="fullName"
                                                 value={formData.fullName}
                                                 onChange={handleChange}
-                                                required
                                                 className={`w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border ${
                                                     errors.fullName 
                                                         ? 'border-red-500' 
