@@ -16,46 +16,75 @@ export default function Footer(){
         </div>
         <footer className="relative bg-gray-900 overflow-hidden">
             <span className="absolute blur-[200px] w-[300px] h-[300px] rounded-full top-0 -start-[0] bg-gradient-to-tl to-amber-400  from-fuchsia-600 z-0"></span>
-            <div className="container-fluid relative md:py-24 py-16">
-                <div className="container relative">
-                    <div className="grid grid-cols-1 text-center">
-                        <div className="">
-                            <h4 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl text-white tracking-normal mb-4">Start Your Free Trail.</h4>
-                            <p className="text-white/70 text-lg max-w-xl mx-auto">Artificial intelligence makes it fast easy to create content for your blog, social media, website, and more!</p>
-
-                            <div className="mt-6">
-                                <Link href="" className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-transparent hover:bg-amber-400 border-gray-800 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-400 text-white rounded-md">Join Now!</Link>
-                            </div>
-                        </div>
+            
+            <div className="container relative md:py-24 py-16">
+                <div className="grid md:grid-cols-12 grid-cols-1 gap-6">
+                    {/* Brand Section */}
+                    <div className="md:col-span-5">
+                        <Link href="/" className="inline-block mb-4">
+                            <Image src="/images/logo-light.png" width={127} height={24} className="h-6" alt="Qarsup AI"/>
+                        </Link>
+                        <p className="text-white/70 text-base max-w-md">
+                            Qarsup AI is an artificial intelligence platform designed to help teams and businesses generate high-quality content efficiently, consistently, and at scale.
+                        </p>
                     </div>
-                </div>
-            </div>
 
-            <div className="container relative text-center">
-                <div className="grid grid-cols-1 border-t border-gray-800 dark:border-slate-800">
-                    <div className="py-[30px] px-0">
-                        <div className="grid md:grid-cols-2 items-center">
-                            <div className="md:text-start text-center">
-                                <Link href="#" className="text-[22px] focus:outline-none">
-                                    <Image src="/images/logo-light.png" width={127} height={24} className="mx-auto md:me-auto md:ms-0" alt=""/>
+                    {/* Legal Links */}
+                    <div className="md:col-span-3">
+                        <h5 className="text-white font-semibold mb-4">Legal</h5>
+                        <ul className="list-none space-y-2">
+                            <li>
+                                <Link href="/privacy" className="text-white/70 hover:text-amber-400 duration-500 inline-block">
+                                    Privacy Policy
                                 </Link>
-                            </div>
+                            </li>
+                            <li>
+                                <Link href="/terms" className="text-white/70 hover:text-amber-400 duration-500 inline-block">
+                                    Terms of Service
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
 
-                            <ul className="list-none footer-list md:text-end text-center mt-6 md:mt-0 space-x-1">
-                                <li className="inline"><Link href="https://1.envato.market/mortalai-next" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiShoppingCart className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="https://dribbble.com/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiDribbble className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="http://linkedin.com/company/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiLinkedin className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="https://www.facebook.com/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiFacebook className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="https://www.instagram.com/shreethemes/" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiInstagram className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="https://twitter.com/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiTwitter className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="mailto:support@shreethemes.in" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiMail className="h-4 w-4 align-middle"/></Link></li>
-                                <li className="inline"><Link href="https://forms.gle/QkTueCikDGqJnbky9" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white"><FiFileText className="h-4 w-4 align-middle"/></Link></li>
-                            </ul>
-                        </div>
+                    {/* Social Media - Keeping existing social links */}
+                    <div className="md:col-span-4 md:text-end text-center">
+                        <ul className="list-none footer-list inline-flex flex-wrap justify-center md:justify-end gap-2 mt-6 md:mt-0">
+                            <li className="inline">
+                                <Link href="https://dribbble.com/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white">
+                                    <FiDribbble className="h-4 w-4 align-middle"/>
+                                </Link>
+                            </li>
+                            <li className="inline">
+                                <Link href="http://linkedin.com/company/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white">
+                                    <FiLinkedin className="h-4 w-4 align-middle"/>
+                                </Link>
+                            </li>
+                            <li className="inline">
+                                <Link href="https://www.facebook.com/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white">
+                                    <FiFacebook className="h-4 w-4 align-middle"/>
+                                </Link>
+                            </li>
+                            <li className="inline">
+                                <Link href="https://www.instagram.com/shreethemes/" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white">
+                                    <FiInstagram className="h-4 w-4 align-middle"/>
+                                </Link>
+                            </li>
+                            <li className="inline">
+                                <Link href="https://twitter.com/shreethemes" target="_blank" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white">
+                                    <FiTwitter className="h-4 w-4 align-middle"/>
+                                </Link>
+                            </li>
+                            <li className="inline">
+                                <Link href="mailto:support@shreethemes.in" className="h-8 w-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center border border-gray-800 dark:border-slate-800 rounded-md hover:border-amber-400 dark:hover:border-amber-400 hover:bg-amber-400 dark:hover:bg-amber-400 text-slate-300 hover:text-white">
+                                    <FiMail className="h-4 w-4 align-middle"/>
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
+            {/* Copyright */}
             <div className="py-[30px] px-0 border-t border-gray-800 dark:border-slate-800">
                 <div className="container relative text-center">
                     <div className="grid grid-cols-1">
