@@ -1,15 +1,18 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { createClient } from "@/utils/supabase/client";
 import { signupSchema, sanitizeEmail } from "@/lib/validation/schemas";
 
+// Force dynamic rendering for checkout page (required for useSearchParams)
+export const dynamic = 'force-dynamic';
+
 const Navbar = dynamic(() => import('../components/navbar'));
 const Footer = dynamic(() => import('../components/footer'));
 
-export default function Checkout() {
+function CheckoutContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     
@@ -453,5 +456,23 @@ export default function Checkout() {
 
             <Footer />
         </>
+    );
+}
+
+export default function Checkout() {
+    return (
+        <Suspense fallback={
+            <>
+                <Navbar />
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-400 mx-auto"></div>
+                        <p className="mt-4 text-slate-400">Loading checkout...</p>
+                    </div>
+                </div>
+            </>
+        }>
+            <CheckoutContent />
+        </Suspense>
     );
 }
