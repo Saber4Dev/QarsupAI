@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { signupSchema, sanitizeEmail } from "@/lib/validation/schemas";
 
 export default function Signup(){
     const [email, setEmail] = useState("");
@@ -20,14 +21,22 @@ export default function Signup(){
         setLoading(true);
 
         try {
+            // Client-side validation and sanitization
+            const sanitizedEmail = sanitizeEmail(email);
+            const validatedData = signupSchema.parse({
+                email: sanitizedEmail,
+                password: password, // Password is validated but not sanitized (preserve special chars)
+            });
+
             const supabase = createClient();
             const { data, error: authError } = await supabase.auth.signUp({
-                email,
-                password,
+                email: validatedData.email,
+                password: validatedData.password,
             });
 
             if (authError) {
-                setError(authError.message);
+                // Generic error message to prevent user enumeration
+                setError("Unable to create account. Please check your information and try again.");
                 setLoading(false);
                 return;
             }
@@ -39,8 +48,15 @@ export default function Signup(){
                     router.push("/login");
                 }, 2000);
             }
-        } catch (err) {
-            setError("An unexpected error occurred");
+        } catch (err: any) {
+            // Handle validation errors
+            if (err.errors && Array.isArray(err.errors)) {
+                const validationError = err.errors[0]?.message || "Invalid input. Please check your email and password requirements.";
+                setError(validationError);
+            } else {
+                // Generic error for security (don't expose system details)
+                setError("An error occurred. Please try again.");
+            }
             setLoading(false);
         }
     };
@@ -81,6 +97,8 @@ export default function Signup(){
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
+                                            maxLength={254}
+                                            autoComplete="email"
                                             className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-amber-400 dark:border-gray-800 dark:focus:border-amber-400 focus:ring-0" 
                                             placeholder="name@example.com"
                                         />
@@ -94,10 +112,13 @@ export default function Signup(){
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required
-                                            minLength={6}
+                                            minLength={8}
+                                            maxLength={128}
+                                            autoComplete="new-password"
                                             className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-amber-400 dark:border-gray-800 dark:focus:border-amber-400 focus:ring-0" 
-                                            placeholder="Password (min. 6 characters)"
+                                            placeholder="Password (min. 8 characters, must include letter and number)"
                                         />
+                                        <p className="text-slate-400 text-xs mt-1">Password must be at least 8 characters and include both letters and numbers.</p>
                                     </div>
     
                                     <div className="mb-4">
@@ -123,4 +144,3 @@ export default function Signup(){
         </>
     )
 }
-

@@ -71,7 +71,7 @@ export default function AboutThree(){
                         </ul>
 
                         <div className="mt-4">
-                            <Link href="" className="hover:text-amber-400 font-medium duration-500">Find Out More <i className="mdi mdi-chevron-right text-[20px] align-middle"></i></Link>
+                            <Link href="/aboutus" className="hover:text-amber-400 font-medium duration-500">Find Out More <i className="mdi mdi-chevron-right text-[20px] align-middle"></i></Link>
                         </div>
                     </div>
                 </div>

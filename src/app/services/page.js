@@ -102,7 +102,7 @@ export default function Services(){
                                     <Link href="" className="font-semibold text-xl hover:text-amber-400">{item.title}</Link>
                                     <p className="text-slate-400 mt-3">{item.desc}</p>
                                     <div className="mt-4">
-                                        <Link href="" className="hover:text-amber-400 font-medium duration-500">Read More <i className="mdi mdi-arrow-right align-middle"></i></Link>
+                                        <Link href="/services" className="hover:text-amber-400 font-medium duration-500">Read More <i className="mdi mdi-arrow-right align-middle"></i></Link>
                                     </div>
                                 </div>
                             </div>

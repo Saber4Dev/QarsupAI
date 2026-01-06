@@ -54,7 +54,7 @@ export default function IndexTwo(){
                                 <form className="relative max-w-md mx-auto lg:ms-0">
                                     <div className="relative">
                                         <i className="mdi mdi-email-outline text-xl absolute top-3 start-5"></i>
-                                        <input type="email" id="aiemail" name="email" className="py-4 pe-40 ps-12 w-full h-[50px] outline-none text-slate-900 dark:text-white rounded-md bg-white/60 dark:bg-slate-900/60 shadow dark:shadow-gray-800" placeholder="support@qarsup.ai"/>
+                                        <input type="email" id="aiemail" name="email" className="py-4 pe-40 ps-12 w-full h-[50px] outline-none text-slate-900 dark:text-white rounded-md bg-white/60 dark:bg-slate-900/60 shadow dark:shadow-gray-800" placeholder="support@qarsup.com"/>
                                     </div>
                                     <button type="submit" className="py-2 px-5 inline-block font-semibold tracking-wide align-middle duration-500 text-base text-center absolute top-[2px] end-[3px] h-[46px] bg-amber-400 hover:bg-amber-500 border border-amber-400 hover:border-amber-500 text-white rounded-md">Sign Up</button>
                                 </form>

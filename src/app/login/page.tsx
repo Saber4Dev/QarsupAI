@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { loginSchema, sanitizeEmail } from "@/lib/validation/schemas";
 
 export default function Login(){
     const [email, setEmail] = useState("");
@@ -18,14 +19,22 @@ export default function Login(){
         setLoading(true);
 
         try {
+            // Client-side validation and sanitization
+            const sanitizedEmail = sanitizeEmail(email);
+            const validatedData = loginSchema.parse({
+                email: sanitizedEmail,
+                password: password, // Password is validated but not sanitized (preserve special chars)
+            });
+
             const supabase = createClient();
             const { data, error: authError } = await supabase.auth.signInWithPassword({
-                email,
-                password,
+                email: validatedData.email,
+                password: validatedData.password,
             });
 
             if (authError) {
-                setError(authError.message);
+                // Generic error message to prevent user enumeration
+                setError("Invalid email or password. Please try again.");
                 setLoading(false);
                 return;
             }
@@ -34,8 +43,15 @@ export default function Login(){
                 router.push("/");
                 router.refresh();
             }
-        } catch (err) {
-            setError("An unexpected error occurred");
+        } catch (err: any) {
+            // Handle validation errors
+            if (err.errors && Array.isArray(err.errors)) {
+                const validationError = err.errors[0]?.message || "Invalid input. Please check your email and password.";
+                setError(validationError);
+            } else {
+                // Generic error for security (don't expose system details)
+                setError("An error occurred. Please try again.");
+            }
             setLoading(false);
         }
     };
@@ -70,6 +86,8 @@ export default function Login(){
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
+                                            maxLength={254}
+                                            autoComplete="email"
                                             className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-amber-400 dark:border-gray-800 dark:focus:border-amber-400 focus:ring-0" 
                                             placeholder="name@example.com"
                                         />
@@ -83,6 +101,8 @@ export default function Login(){
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required
+                                            maxLength={128}
+                                            autoComplete="current-password"
                                             className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-amber-400 dark:border-gray-800 dark:focus:border-amber-400 focus:ring-0" 
                                             placeholder="Password:"
                                         />
@@ -119,4 +139,3 @@ export default function Login(){
         </>
     )
 }
-

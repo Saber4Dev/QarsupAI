@@ -18,7 +18,8 @@
     "react-icons": "^4.11.0",
     "react-modal-video": "^2.0.1",
     "react-scroll": "^1.8.9",
-    "react-type-animation": "^3.1.0"
+    "react-type-animation": "^3.1.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@types/react": "19.2.7",
