@@ -47,10 +47,21 @@ function getSecurityHeaders(): Record<string, string> {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
+  // Skip middleware for static files, images, and assets
+  if (
+    pathname.startsWith('/_next/static') ||
+    pathname.startsWith('/_next/image') ||
+    pathname.startsWith('/images/') ||
+    pathname === '/favicon.ico' ||
+    /\.(svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|eot|otf|json|xml|pdf|zip|mp4|mp3|wav|ogg)$/i.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+  
   // Only apply rate limiting to these specific endpoints:
   // 1. Gemini API (AI generation)
   // 2. POST requests to login/signup/reset-password
-  // Everything else (including images, pages, etc.) is NOT rate limited
+  // Everything else (including pages) is NOT rate limited
   
   let endpointType: string | null = null;
   
@@ -85,21 +96,17 @@ export async function middleware(request: NextRequest) {
 
 /**
  * Middleware matcher
- * - Exclude all static files, images, and assets
- * - Only process HTML pages and API routes
- * - Rate limiting only applies to specific endpoints in the middleware function
+ * - Match all routes (exclusions handled in middleware function)
+ * - Static files, images, and assets are skipped in the middleware function
+ * - Rate limiting only applies to specific endpoints
  */
 export const config = {
   matcher: [
     /*
-     * Exclude:
-     * - _next/static and _next/image (Next.js static files)
-     * - /images/ directory (all images)
-     * - All file extensions (images, fonts, media, etc.)
-     * 
-     * This ensures images load normally without any middleware interference
+     * Match all routes - exclusions are handled in the middleware function
+     * This avoids regex capturing group issues in the matcher
      */
-    '/((?!_next/static|_next/image|images/|favicon\\.ico|.*\\.(svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|eot|otf|json|xml|pdf|zip|mp4|mp3|wav|ogg)$).*)',
+    '/(.*)',
   ],
 };
 
