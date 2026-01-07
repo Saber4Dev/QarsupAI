@@ -58,6 +58,11 @@ export default function Footer(){
                                     Refund & Cancellation Policy
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/cookies" className="text-white/70 hover:text-amber-400 duration-500 inline-block">
+                                    Cookie Policy
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 

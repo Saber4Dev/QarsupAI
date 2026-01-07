@@ -8,7 +8,7 @@ import { contactSchema, sanitizeString, sanitizeEmail } from "@/lib/validation/s
 const Navbar = dynamic(() => import('../components/navbar'))
 const Footer = dynamic(() => import('../components/footer'))
 
-import { FiHexagon, FiPhone, FiMail, FiMapPin } from "../assets/icons/vander"
+import { FiHexagon, FiPhone, FiMail, FiClock } from "../assets/icons/vander"
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -55,12 +55,20 @@ export default function Contact() {
                 comments: sanitizeString(formData.comments),
             });
 
-            // In a real application, you would send this to an API endpoint
-            // For now, we'll just validate and show success
-            // TODO: Create API route to handle contact form submissions
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Send to API endpoint
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(validatedData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to send message. Please try again.');
+            }
             
             setSuccess(true);
             setFormData({ name: '', email: '', subject: '', comments: '' });
@@ -68,7 +76,7 @@ export default function Contact() {
             if (err.errors && Array.isArray(err.errors)) {
                 setError(err.errors[0]?.message || "Please check your input and try again.");
             } else {
-                setError("An error occurred. Please try again.");
+                setError(err.message || "An error occurred. Please try again.");
             }
         } finally {
             setLoading(false);
@@ -78,20 +86,7 @@ export default function Contact() {
     return (
         <>
             <Navbar />
-            <div className="container-fluid relative mt-20">
-                <div className="grid grid-cols-1">
-                    <div className="w-full leading-[0] border-0">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39206.002432144705!2d-95.4973981212445!3d29.709510002925988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c16de81f3ca5%3A0xf43e0b60ae539ac9!2sGerald+D.+Hines+Waterwall+Park!5e0!3m2!1sen!2sin!4v1566305861440!5m2!1sen!2sin" 
-                            title="my-map" 
-                            style={{ border: "0" }} 
-                            className="w-full h-[500px]" 
-                            allowFullScreen
-                        ></iframe>
-                    </div>
-                </div>
-            </div>
-            <section className="relative lg:py-24 py-16">
+            <section className="relative lg:py-24 py-16 mt-20">
                 <div className="container">
                     <div className="grid md:grid-cols-12 grid-cols-1 items-center gap-[30px]">
                         <div className="lg:col-span-7 md:col-span-6">
@@ -234,17 +229,16 @@ export default function Contact() {
                             <div className="relative overflow-hidden text-transparent -m-3">
                                 <FiHexagon className="h-24 w-24 fill-amber-400/5 group-hover:fill-white/10 mx-auto" />
                                 <div className="absolute top-2/4 -translate-y-2/4 start-0 end-0 mx-auto text-amber-400 rounded-xl group-hover:text-white duration-500 text-2xl flex align-middle justify-center items-center">
-                                    <FiMapPin />
+                                    <FiClock />
                                 </div>
                             </div>
 
                             <div className="content mt-7">
-                                <h5 className="title h5 text-lg font-semibold">Location</h5>
-                                <p className="text-slate-400 mt-3">C/54 Northwest Freeway, Suite 558, <br /> Houston, USA 485</p>
+                                <h5 className="title h5 text-lg font-semibold">Available Support</h5>
+                                <p className="text-slate-400 mt-3">Our support team is available 24/7 to assist you with any questions or concerns. We're here to help whenever you need us.</p>
 
                                 <div className="mt-5">
-                                    <Link href="#"
-                                        data-type="iframe" className="video-play-icon read-more lightbox hover:text-amber-400">View on Google map</Link>
+                                    <span className="text-amber-400 font-semibold">24/7 Support</span>
                                 </div>
                             </div>
                         </div>
