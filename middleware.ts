@@ -46,21 +46,29 @@ function getSecurityHeaders(): Record<string, string> {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  let endpointType = 'general';
   
-  // Determine endpoint type for rate limiting
-  if (pathname.startsWith('/login') || pathname.startsWith('/signup') || pathname.startsWith('/reset-password')) {
-    endpointType = 'auth';
-  } else if (pathname.startsWith('/contact') && request.method === 'POST') {
+  // Only apply rate limiting to specific sensitive endpoints
+  // Regular page navigation is NOT rate limited to allow casual browsing
+  let endpointType: string | null = null;
+  
+  // Rate limit only these specific endpoints:
+  if (pathname.startsWith('/api/contact') && request.method === 'POST') {
     endpointType = 'contact';
   } else if (pathname.startsWith('/api/ai') && request.method === 'POST') {
-    endpointType = 'ai'; // AI generation endpoints need stricter rate limiting
+    endpointType = 'ai';
+  } else if (
+    (pathname.startsWith('/login') || pathname.startsWith('/signup') || pathname.startsWith('/reset-password')) &&
+    request.method === 'POST'
+  ) {
+    endpointType = 'auth';
   }
   
-  // Apply rate limiting (only check once)
-  const rateLimitResponse = rateLimit(request, endpointType);
-  if (rateLimitResponse) {
-    return rateLimitResponse;
+  // Apply rate limiting only for sensitive endpoints
+  if (endpointType) {
+    const rateLimitResponse = rateLimit(request, endpointType);
+    if (rateLimitResponse) {
+      return rateLimitResponse;
+    }
   }
   
   // Create response with security headers
@@ -76,7 +84,9 @@ export async function middleware(request: NextRequest) {
 
 /**
  * Middleware matcher
- * - Apply to all routes except static files and API routes
+ * - Apply to all routes except static files
+ * - Rate limiting is only applied to specific sensitive endpoints
+ * - Regular page navigation is NOT rate limited
  */
 export const config = {
   matcher: [
@@ -87,9 +97,9 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public files (images, etc.)
      * 
-     * Note: API routes are included for rate limiting
+     * Note: Rate limiting is only applied to specific endpoints in the middleware function
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|eot)$).*)',
   ],
 };
 

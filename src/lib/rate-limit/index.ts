@@ -21,25 +21,21 @@ interface RateLimitConfig {
 }
 
 // Rate limit configurations per endpoint type
+// Note: Regular page navigation is NOT rate limited to allow casual browsing
 const RATE_LIMITS: Record<string, RateLimitConfig> = {
   auth: {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    maxRequests: 5, // 5 attempts per 15 minutes
+    maxRequests: 10, // 10 attempts per 15 minutes (increased for better UX)
     message: 'Too many authentication attempts. Please try again later.',
-  },
-  general: {
-    windowMs: 60 * 1000, // 1 minute
-    maxRequests: 60, // 60 requests per minute
-    message: 'Too many requests. Please slow down.',
   },
   contact: {
     windowMs: 60 * 60 * 1000, // 1 hour
-    maxRequests: 3, // 3 contact form submissions per hour
+    maxRequests: 10, // 10 contact form submissions per hour (increased for better UX)
     message: 'Too many contact form submissions. Please try again later.',
   },
   ai: {
     windowMs: 60 * 1000, // 1 minute
-    maxRequests: 10, // 10 AI generations per minute (to prevent API abuse)
+    maxRequests: 20, // 20 AI generations per minute (increased for better UX)
     message: 'Too many content generation requests. Please wait a moment before generating more content.',
   },
 };
@@ -86,9 +82,18 @@ function getClientId(request: NextRequest): string {
  */
 function checkRateLimit(
   clientId: string,
-  endpointType: string = 'general'
+  endpointType: string
 ): { allowed: boolean; remaining: number; resetTime: number } {
-  const config = RATE_LIMITS[endpointType] || RATE_LIMITS.general;
+  const config = RATE_LIMITS[endpointType];
+  
+  // If no config found, allow the request (shouldn't happen if middleware is correct)
+  if (!config) {
+    return {
+      allowed: true,
+      remaining: Infinity,
+      resetTime: Date.now() + 60000,
+    };
+  }
   const key = `${clientId}:${endpointType}`;
   const now = Date.now();
   
@@ -132,13 +137,18 @@ function checkRateLimit(
  */
 export function rateLimit(
   request: NextRequest,
-  endpointType: string = 'general'
+  endpointType: string
 ): NextResponse | null {
   const clientId = getClientId(request);
   const result = checkRateLimit(clientId, endpointType);
   
   if (!result.allowed) {
-    const config = RATE_LIMITS[endpointType] || RATE_LIMITS.general;
+    const config = RATE_LIMITS[endpointType];
+    
+    // Safety check - if no config, allow request
+    if (!config) {
+      return null;
+    }
     const response = NextResponse.json(
       {
         error: config.message || 'Too many requests',
@@ -164,11 +174,16 @@ export function rateLimit(
  */
 export function getRateLimitHeaders(
   request: NextRequest,
-  endpointType: string = 'general'
+  endpointType: string
 ): Record<string, string> {
   const clientId = getClientId(request);
   const result = checkRateLimit(clientId, endpointType);
-  const config = RATE_LIMITS[endpointType] || RATE_LIMITS.general;
+  const config = RATE_LIMITS[endpointType];
+  
+  // Safety check
+  if (!config) {
+    return {};
+  }
   
   return {
     'X-RateLimit-Limit': config.maxRequests.toString(),
