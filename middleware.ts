@@ -7,8 +7,8 @@
  * 
  * IMPORTANT: Rate limiting is NOT handled in middleware.
  * Rate limiting must be implemented inside individual API routes
- * (e.g., /app/api/**/route.ts) to avoid breaking App Router navigation.
- * 
+ * (e.g., /app/api/route.ts) to avoid breaking App Router navigation.
+ *
  * Why middleware rate limiting breaks App Router:
  * - Next.js App Router makes multiple RSC (React Server Components) GET requests
  * - These requests have ?rsc= query parameters
