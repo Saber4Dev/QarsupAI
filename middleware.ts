@@ -2,13 +2,22 @@
  * Next.js Middleware
  * 
  * Security Features:
- * - Rate limiting for auth endpoints
- * - Security headers
+ * - Security headers only
  * - Request validation
+ * 
+ * IMPORTANT: Rate limiting is NOT handled in middleware.
+ * Rate limiting must be implemented inside individual API routes
+ * (e.g., /app/api/**/route.ts) to avoid breaking App Router navigation.
+ * 
+ * Why middleware rate limiting breaks App Router:
+ * - Next.js App Router makes multiple RSC (React Server Components) GET requests
+ * - These requests have ?rsc= query parameters
+ * - Middleware rate limiting would block these requests, causing 429 errors
+ * - Pages, layouts, and navigation would all be affected
+ * - Rate limiting should only apply to specific API endpoints, not page navigation
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { rateLimit } from './src/lib/rate-limit';
 
 /**
  * Security headers configuration
@@ -48,6 +57,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Skip middleware for static files, images, and assets
+  // This improves performance by not processing static resources
   if (
     pathname.startsWith('/_next/static') ||
     pathname.startsWith('/_next/image') ||
@@ -58,35 +68,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Only apply rate limiting to these specific endpoints:
-  // 1. Gemini API (AI generation)
-  // 2. POST requests to login/signup/reset-password
-  // Everything else (including pages) is NOT rate limited
-  
-  let endpointType: string | null = null;
-  
-  // Rate limit only these specific endpoints:
-  if (pathname === '/api/ai/generate' && request.method === 'POST') {
-    endpointType = 'ai';
-  } else if (
-    (pathname === '/login' || pathname === '/signup' || pathname === '/reset-password') &&
-    request.method === 'POST'
-  ) {
-    endpointType = 'auth';
-  }
-  
-  // Apply rate limiting only for the specific endpoints above
-  if (endpointType) {
-    const rateLimitResponse = rateLimit(request, endpointType);
-    if (rateLimitResponse) {
-      return rateLimitResponse;
-    }
-  }
-  
-  // For all other routes, just add security headers (no rate limiting)
+  // Create response - NO rate limiting applied
+  // All requests (pages, API routes, RSC requests) proceed normally
   const response = NextResponse.next();
   
-  // Add security headers
+  // Add security headers to all responses
   Object.entries(getSecurityHeaders()).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
@@ -98,7 +84,8 @@ export async function middleware(request: NextRequest) {
  * Middleware matcher
  * - Match all routes (exclusions handled in middleware function)
  * - Static files, images, and assets are skipped in the middleware function
- * - Rate limiting only applies to specific endpoints
+ * - NO rate limiting in middleware - all requests proceed normally
+ * - Rate limiting must be implemented in individual API routes if needed
  */
 export const config = {
   matcher: [
