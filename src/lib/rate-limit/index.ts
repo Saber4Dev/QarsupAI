@@ -21,21 +21,17 @@ interface RateLimitConfig {
 }
 
 // Rate limit configurations per endpoint type
-// Note: Regular page navigation is NOT rate limited to allow casual browsing
+// Note: Only Gemini API and auth endpoints are rate limited
+// All other routes (pages, images, etc.) are NOT rate limited
 const RATE_LIMITS: Record<string, RateLimitConfig> = {
   auth: {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    maxRequests: 10, // 10 attempts per 15 minutes (increased for better UX)
+    maxRequests: 10, // 10 attempts per 15 minutes
     message: 'Too many authentication attempts. Please try again later.',
-  },
-  contact: {
-    windowMs: 60 * 60 * 1000, // 1 hour
-    maxRequests: 10, // 10 contact form submissions per hour (increased for better UX)
-    message: 'Too many contact form submissions. Please try again later.',
   },
   ai: {
     windowMs: 60 * 1000, // 1 minute
-    maxRequests: 20, // 20 AI generations per minute (increased for better UX)
+    maxRequests: 20, // 20 AI generations per minute
     message: 'Too many content generation requests. Please wait a moment before generating more content.',
   },
 };

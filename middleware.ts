@@ -47,23 +47,24 @@ function getSecurityHeaders(): Record<string, string> {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Only apply rate limiting to specific sensitive endpoints
-  // Regular page navigation is NOT rate limited to allow casual browsing
+  // Only apply rate limiting to these specific endpoints:
+  // 1. Gemini API (AI generation)
+  // 2. POST requests to login/signup/reset-password
+  // Everything else (including images, pages, etc.) is NOT rate limited
+  
   let endpointType: string | null = null;
   
   // Rate limit only these specific endpoints:
-  if (pathname.startsWith('/api/contact') && request.method === 'POST') {
-    endpointType = 'contact';
-  } else if (pathname.startsWith('/api/ai') && request.method === 'POST') {
+  if (pathname === '/api/ai/generate' && request.method === 'POST') {
     endpointType = 'ai';
   } else if (
-    (pathname.startsWith('/login') || pathname.startsWith('/signup') || pathname.startsWith('/reset-password')) &&
+    (pathname === '/login' || pathname === '/signup' || pathname === '/reset-password') &&
     request.method === 'POST'
   ) {
     endpointType = 'auth';
   }
   
-  // Apply rate limiting only for sensitive endpoints
+  // Apply rate limiting only for the specific endpoints above
   if (endpointType) {
     const rateLimitResponse = rateLimit(request, endpointType);
     if (rateLimitResponse) {
@@ -71,7 +72,7 @@ export async function middleware(request: NextRequest) {
     }
   }
   
-  // Create response with security headers
+  // For all other routes, just add security headers (no rate limiting)
   const response = NextResponse.next();
   
   // Add security headers
@@ -84,22 +85,21 @@ export async function middleware(request: NextRequest) {
 
 /**
  * Middleware matcher
- * - Apply to all routes except static files
- * - Rate limiting is only applied to specific sensitive endpoints
- * - Regular page navigation is NOT rate limited
+ * - Exclude all static files, images, and assets
+ * - Only process HTML pages and API routes
+ * - Rate limiting only applies to specific endpoints in the middleware function
  */
 export const config = {
   matcher: [
     /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files (images, etc.)
+     * Exclude:
+     * - _next/static and _next/image (Next.js static files)
+     * - /images/ directory (all images)
+     * - All file extensions (images, fonts, media, etc.)
      * 
-     * Note: Rate limiting is only applied to specific endpoints in the middleware function
+     * This ensures images load normally without any middleware interference
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|eot)$).*)',
+    '/((?!_next/static|_next/image|images/|favicon\\.ico|.*\\.(svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|eot|otf|json|xml|pdf|zip|mp4|mp3|wav|ogg)$).*)',
   ],
 };
 
