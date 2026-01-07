@@ -54,10 +54,10 @@ function getSecurityHeaders(): Record<string, string> {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  
   // Skip middleware for static files, images, and assets
   // This improves performance by not processing static resources
+  const { pathname } = request.nextUrl;
+  
   if (
     pathname.startsWith('/_next/static') ||
     pathname.startsWith('/_next/image') ||
@@ -68,11 +68,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Create response - NO rate limiting applied
-  // All requests (pages, API routes, RSC requests) proceed normally
+  // Create response - ALL requests proceed normally
+  // NO rate limiting, NO blocking, NO 429 responses
   const response = NextResponse.next();
   
-  // Add security headers to all responses
+  // Add security headers only
   Object.entries(getSecurityHeaders()).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
