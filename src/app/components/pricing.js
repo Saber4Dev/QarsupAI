@@ -18,10 +18,10 @@ export default function Pricing() {
 
     return (
         <>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mt-6 gap-6 items-stretch">
                 {/* Starter Plan */}
-                <div className="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                    <div className="p-6">
+                <div className="relative overflow-hidden rounded-md shadow dark:shadow-gray-800 h-full flex flex-col">
+                    <div className="p-6 flex flex-col flex-grow">
                         <h5 className="text-2xl leading-normal font-semibold">Starter</h5>
                         <p className="text-slate-400 mt-2">Best for individuals testing Qarsup AI</p>
                         <div className="flex mt-4">
@@ -52,7 +52,7 @@ export default function Pricing() {
 
                         <p className="text-slate-400 text-xs mt-4 italic">Ideal for freelancers, students, and individuals exploring AI-assisted content creation.</p>
 
-                        <div className="mt-6">
+                        <div className="mt-auto pt-6">
                             <Link
                                 href={handlePlanSelect('Starter', 5)}
                                 className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-amber-400 hover:bg-amber-500 border-amber-400 hover:border-amber-500 text-white rounded-md w-full"
@@ -64,8 +64,8 @@ export default function Pricing() {
                 </div>
 
                 {/* Pro Plan */}
-                <div className="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                    <div className="p-6">
+                <div className="relative overflow-hidden rounded-md shadow dark:shadow-gray-800 h-full flex flex-col">
+                    <div className="p-6 flex flex-col flex-grow">
                         <h5 className="text-2xl leading-normal font-semibold">Pro</h5>
                         <p className="text-slate-400 mt-2">Designed for professionals and growing teams</p>
                         <div className="flex mt-4">
@@ -100,7 +100,7 @@ export default function Pricing() {
 
                         <p className="text-slate-400 text-xs mt-4 italic">Ideal for content creators, startups, and professionals using AI regularly.</p>
 
-                        <div className="mt-6">
+                        <div className="mt-auto pt-6">
                             <Link
                                 href={handlePlanSelect('Pro', 35)}
                                 className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-amber-400 hover:bg-amber-500 border-amber-400 hover:border-amber-500 text-white rounded-md w-full"
@@ -112,8 +112,8 @@ export default function Pricing() {
                 </div>
 
                 {/* Custom Plan */}
-                <div className="relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                    <div className="p-6">
+                <div className="relative overflow-hidden rounded-md shadow dark:shadow-gray-800 h-full flex flex-col">
+                    <div className="p-6 flex flex-col flex-grow">
                         <h5 className="text-2xl leading-normal font-semibold">Custom</h5>
                         <p className="text-slate-400 mt-2">Tailored for businesses with specific needs</p>
                         
@@ -167,7 +167,7 @@ export default function Pricing() {
 
                         <p className="text-slate-400 text-xs mt-4 italic">Ideal for agencies, enterprises, and teams requiring scalable AI usage.</p>
 
-                        <div className="mt-6">
+                        <div className="mt-auto pt-6">
                             <Link
                                 href={handlePlanSelect('Custom', customPrice)}
                                 className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-amber-400 hover:bg-amber-500 border-amber-400 hover:border-amber-500 text-white rounded-md w-full"

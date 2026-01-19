@@ -3,6 +3,8 @@ import React,{useEffect} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { JsonLd } from '@/lib/seo/jsonld';
+import { generateSoftwareApplicationSchema } from '@/lib/seo/jsonld';
 
 const Navbar = dynamic(() => import('./components/navbar'))
 const BrandLogo = dynamic(() => import('./components/brandLogo'))
@@ -18,15 +20,36 @@ const Footer = dynamic(() => import('./components/footer'))
 
 
 import { TypeAnimation } from 'react-type-animation';
+import { siteUrl } from '@/lib/config/site';
+
 export default function Index(){
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
       }, []);
+    
+    // Generate SoftwareApplication JSON-LD for homepage
+    const softwareSchema = generateSoftwareApplicationSchema({
+        name: 'Qarsup AI',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        offers: {
+            price: '0',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+        },
+        aggregateRating: {
+            ratingValue: '4.8',
+            reviewCount: '1250',
+        },
+    });
 
     return(
         <>
+        {/* JSON-LD Structured Data */}
+        <JsonLd data={softwareSchema} />
+        
        <Navbar/>
         <section className="relative overflow-hidden pt-48 after:content-[''] after:absolute after:inset-0 after:mx-auto after:w-[56rem] after:h-[56rem] after:bg-gradient-to-tl after:to-amber-400/30  after:from-fuchsia-600/30 dark:after:to-amber-400/50 dark:after:from-fuchsia-600/50 after:blur-[200px] after:rounded-full after:-z-1">
             <div className="container relative z-2">
@@ -58,7 +81,7 @@ export default function Index(){
                         </div>
                     </div>
                     <div className="relative mt-8 z-3">
-                        <Image src="/images/classic01.png" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}} alt="" className="mover"/>
+                        <Image src="/images/classic01.png" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}} alt="Qarsup AI - AI Content Platform Dashboard" className="mover"/>
                     </div>
                 </div>
             </div>

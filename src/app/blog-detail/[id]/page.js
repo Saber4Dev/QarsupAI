@@ -1,26 +1,63 @@
 "use client"
-import React,{useEffect} from "react";
+import React,{useEffect, use} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { JsonLd } from '@/lib/seo/jsonld';
+import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/seo/jsonld';
+import { blogData } from "../../data/data";
+import { siteUrl } from '@/lib/config/site';
 
 const Navbar = dynamic(()=>import('../../components/navbar'))
 const Footer = dynamic(() => import('../../components/footer'))
-import { blogData } from "../../data/data";
 
 import {FiHeart,FiMessageCircle, FiUser,FiMail} from '../../assets/icons/vander'
 
 export default function BlogDetails(props){
-    const data = blogData.find((blog)=>blog.id === parseInt(props.params.id))
+    // Unwrap params Promise using React.use() for Next.js 15+
+    const params = use(props.params);
+    const data = blogData.find((blog)=>blog.id === parseInt(params.id))
+    
     useEffect(() => {
         document.documentElement.setAttribute("dir", "ltr");
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
       }, []);
   
+    // Generate JSON-LD schemas
+    const articleSchema = data ? generateArticleSchema({
+        headline: data.title,
+        description: `Read ${data.title} by ${data.author}. ${data.date}`,
+        image: `${siteUrl}${data.image}`,
+        datePublished: data.date,
+        dateModified: data.date,
+        author: {
+            '@type': 'Person',
+            name: data.author,
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'Qarsup AI',
+            logo: {
+                '@type': 'ImageObject',
+                url: `${siteUrl}/images/logo-white.png`,
+            },
+        },
+    }) : null;
+
+    const breadcrumbSchema = data ? generateBreadcrumbSchema([
+        { name: 'Home', url: siteUrl },
+        { name: 'Blog', url: `${siteUrl}/blog` },
+        { name: data.title, url: `${siteUrl}/blog-detail/${data.id}` },
+    ]) : null;
+  
     return(
         <>
         <Navbar/>
+        {/* JSON-LD Structured Data */}
+        {articleSchema && <JsonLd data={articleSchema} />}
+        {breadcrumbSchema && <JsonLd data={breadcrumbSchema} />}
+        
         <section className="relative md:pt-44 pt-36 bg-gradient-to-b from-amber-400/20 dark:from-amber-400/40 to-transparent">
             <div className="container relative">
                 <div className="md:flex justify-center">
@@ -30,7 +67,9 @@ export default function BlogDetails(props){
                         <p className="text-slate-400 text-lg mt-3">Hello there! I am ChatGPT, a language model developed by OpenAI, based on the powerful GPT (Generative Pre-trained Transformer) architecture.</p>
 
                         <div className="flex items-center mt-5">
-                            <Image src={data?.client} width={48} height={48} className="h-12 w-12 rounded-full" alt=""/>
+                            {data?.client && (
+                                <Image src={data.client} width={48} height={48} className="h-12 w-12 rounded-full" alt={data?.author || 'Author'}/>
+                            )}
 
                             <div className="ms-2">
                                 <h6><Link href="" className="font-medium hover:text-amber-400">{data?.author}</Link><Link href="" className="ms-1 text-green-600 font-medium"><i className="mdi mdi-circle-medium"></i>Follow</Link></h6>
@@ -46,7 +85,9 @@ export default function BlogDetails(props){
             <div className="container relative">
                 <div className="md:flex justify-center">
                     <div className="lg:w-2/3 md:w-4/5">
-                        <Image src={data?.image} width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}} className="rounded-md" alt=""/>
+                        {data?.image && (
+                            <Image src={data.image} width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}} className="rounded-md" alt={data?.title || 'Blog post image'}/>
+                        )}
 
                         <p className="text-slate-400 mt-4">Artificial Intelligence (AI) is a groundbreaking field of computer science that aims to create intelligent machines capable of performing tasks that typically require human intelligence.</p>
                         
@@ -78,7 +119,7 @@ export default function BlogDetails(props){
                             <div className="mt-8">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                        <Image src="/images/client/02.jpg" width={44} height={44} className="h-11 w-11 rounded-full shadow" alt=""/>
+                                        <Image src="/images/client/02.jpg" width={44} height={44} className="h-11 w-11 rounded-full shadow" alt="Calvin Carlo"/>
 
                                         <div className="ms-3 flex-1">
                                             <Link href="" className="font-semibold hover:text-amber-400 duration-500">Calvin Carlo</Link>
@@ -96,7 +137,7 @@ export default function BlogDetails(props){
                             <div className="mt-8">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                        <Image src="/images/client/03.jpg" width={44} height={44} className="h-11 w-11 rounded-full shadow" alt=""/>
+                                        <Image src="/images/client/03.jpg" width={44} height={44} className="h-11 w-11 rounded-full shadow" alt="Calvin Carlo"/>
 
                                         <div className="ms-3 flex-1">
                                             <Link href="" className="font-semibold hover:text-amber-400 duration-500">Calvin Carlo</Link>

@@ -1,0 +1,41 @@
+{
+  "name": "Qarsup AI - AI Content Platform",
+  "short_name": "Qarsup AI",
+  "description": "AI Content Platform for Modern Teams - Create amazing content with artificial intelligence",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#fbbf24",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/logo-icon-64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo-icon-80.png",
+      "sizes": "80x80",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "business", "utilities"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Access your dashboard",
+      "url": "/dashboard",
+      "icons": [{ "src": "/images/logo-icon-64.png", "sizes": "64x64" }]
+    }
+  ]
+}
